@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         MONGO_URI = "mongodb://newadmin:newadmin123@172.31.44.0:27017/admin"
-        MONGO_DB_CREDS = credentials ('mongo-db-credentials')
+        MONGO_DB_CREDS = credentials ('mongo-db-creds')
         MONGO_USERNAME = credentials ('mongo-db-username')
         MONGO_PASSWORD = credentials ('mongo-db-password')
     }
