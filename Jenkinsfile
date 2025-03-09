@@ -36,8 +36,6 @@ pipeline {
                             --nvdApiKey=cc537789-ead1-40c4-a8ae-4610acaa9f42 \
                             --scan "$WORKSPACE/" 
                             --out "$WORKSPACE/dependency-check-report/" 
-                            --scan \'./\' 
-                            --out \'./dependency-check-report\'  
                             --format \'ALL\' 
                             --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
