@@ -56,7 +56,7 @@ pipeline {
             }    
         }
         stage ('Unit Testing') {
-            options { retry(3) }
+            options { retry(1) }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
                 sh 'npm test'
