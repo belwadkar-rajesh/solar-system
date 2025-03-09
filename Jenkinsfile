@@ -59,7 +59,7 @@ pipeline {
         stage ('Unit Testing') {
             options { retry(1) }
             steps {
-                //withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) { 
+                //withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')])  
                 {
                 sh 'echo Colon-Separated - $MONGO_DB_CREDS'
                 sh 'echo Username - $MONGO_DB_CREDS_USR'
