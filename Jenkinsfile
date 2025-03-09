@@ -60,7 +60,6 @@ pipeline {
             options { retry(1) }
             steps {
                 //withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')])  
-                {
                 sh 'echo Colon-Separated - $MONGO_DB_CREDS'
                 sh 'echo Username - $MONGO_DB_CREDS_USR'
                 sh 'echo Password - $MONGO_DB_CREDS_PSW'
@@ -69,7 +68,6 @@ pipeline {
 
 
             }
-        }
         stage ('Code Coverage') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
