@@ -20,5 +20,13 @@ pipeline {
             }
 
         }
+        stage ('NPM Dependencies audit') {
+            steps {
+                sh '''
+                    npm audit --audit-level=critical
+                    echo $?
+                    '''
+            }
+        }
     }
 }
