@@ -34,12 +34,14 @@ pipeline {
                         dependencyCheck additionalArguments: '''
                             --updateonly \
                             --nvdApiKey=cc537789-ead1-40c4-a8ae-4610acaa9f42 \
+                            --scan "$WORKSPACE/" 
+                            --out "$WORKSPACE/dependency-check-report/" 
                             --scan \'./\' 
                             --out \'./dependency-check-report\'  
                             --format \'ALL\' 
                             --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
-                        dependencyCheckPublisher failedTotalCritical: 1, pattern: './dependency-check-report/dependency-check-report.xml', stopBuild: false
+                        dependencyCheckPublisher failedTotalCritical: 1, pattern:  "$WORKSPACE/dependency-check-report/dependency-check-report.xml", stopBuild: false
                     }
                 }
             }    
