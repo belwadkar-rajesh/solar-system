@@ -8,6 +8,7 @@ pipeline {
         MONGO_DB_CREDS = credentials ('mongo-db-creds')
         MONGO_USERNAME = credentials ('mongo-db-username')
         MONGO_PASSWORD = credentials ('mongo-db-password')
+        SONAR_SCANNER_HOME = tool 'sonarqube-scanner-702';
     }
 
     options {
@@ -77,6 +78,19 @@ pipeline {
                 }
             }
         }    
+        stage ('SAST - SonarQube') {
+            steps {
+                sh 'echo $SONAR_SCANNER_HOME'
+                sh '''
+                    $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                    -Dsonar.projectKey=solar-system \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://172.31.7.96:9000 \
+                    -Dsonar.token=sqp_503c3389d486ddb38001fa5c6eb5a9da1babb703
+
+                '''
+            }
+        }
     }
     post {
     always {
