@@ -3,7 +3,6 @@ pipeline {
     tools {
         nodejs 'nodejs-22-6-0'
     }
-
     stages {
         stage('VM Node Version') {
             steps {
@@ -18,9 +17,7 @@ pipeline {
             steps {
                 sh 'npm install --no-audit'
             }
-
         }
-
         stage ('Dependencies scanning') {
             parallel {
 
