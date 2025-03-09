@@ -7,6 +7,10 @@ pipeline {
         MONGO_URI = "mongodb://newadmin:newadmin123@172.31.44.0:27017/admin"
     }
 
+    options {
+        disableResume()
+        disableConcurrentBuilds abortPrevious: true
+    }
     stages {
         stage('VM Node Version') {
             steps {
@@ -20,6 +24,7 @@ pipeline {
         stage ('Installing Dependencies') {
             options { timestamps() }
             steps {
+                sh 'sleep 100s'
                 sh 'npm install --no-audit'
             }
         }
