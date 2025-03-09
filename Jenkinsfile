@@ -4,7 +4,7 @@ pipeline {
         nodejs 'nodejs-22-6-0'
     }
     environment {
-        MONGO_URI = "mongodb://172.31.44.0:27017/?directConnection=true&authSource=admin"
+        MONGO_URI = "mongodb://newadmin:newadmin123@172.31.44.0:27017/admin"
     }
 
     stages {
@@ -18,6 +18,7 @@ pipeline {
             }
         }
         stage ('Installing Dependencies') {
+            options { timestamps() }
             steps {
                 sh 'npm install --no-audit'
             }
@@ -51,6 +52,7 @@ pipeline {
             }    
         }
         stage ('Unit Testing') {
+            options { retry(3) }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
                 sh 'npm test'
