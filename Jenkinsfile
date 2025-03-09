@@ -1,18 +1,24 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs-20-6-0'
-    }   
+        nodejs 'nodejs-22-6-0'
+    }
+
     stages {
-        stage {
+        stage('VM Node Version') {
             steps {
-                sh echo "Step 1"
+                sh '''
+                    node -v
+                    npm -v
+                    hostname
+                '''
             }
         }
-        stage {
+        stage ('Installing Dependencies') {
             steps {
-                sh echo "Step 2"
+                sh 'npm install --no-audit'
             }
+
         }
     }
 }
