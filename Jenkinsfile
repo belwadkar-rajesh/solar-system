@@ -1,21 +1,18 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs-22-6-0'
-    }
-
-        stages {
-            stage ('VM Node Version') {
-                steps {
-                    sh '''
-                        node -v
-                        npm -v
-                        hostname
-                        systemctl status jenkins
-                    '''
-                }
-
+        nodejs 'nodejs-20-6-0'
+    }   
+    stages {
+        stage {
+            steps {
+                echo "Step 1"
             }
-
         }
+        stage {
+            steps {
+                echo "Step 2"
+            }
+        }
+    }
 }
