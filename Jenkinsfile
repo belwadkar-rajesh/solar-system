@@ -6,12 +6,12 @@ pipeline {
     stages {
         stage {
             steps {
-                echo "Step 1"
+                sh echo "Step 1"
             }
         }
         stage {
             steps {
-                echo "Step 2"
+                sh echo "Step 2"
             }
         }
     }
