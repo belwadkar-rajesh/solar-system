@@ -3,6 +3,10 @@ pipeline {
     tools {
         nodejs 'nodejs-22-6-0'
     }
+    environment {
+        MONGO_URI = "mongodb://172.31.44.0:27017/?directConnection=true&authSource=admin"
+    }
+
     stages {
         stage('VM Node Version') {
             steps {
@@ -48,8 +52,12 @@ pipeline {
         }
         stage ('Unit Testing') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
                 sh 'npm test'
+               }
+
+               junit allowEmptyResults: true, testResults: 'test-results.xml'
             }
         }
-    }
+    }    
 }
