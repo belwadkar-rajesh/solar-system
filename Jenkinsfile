@@ -68,7 +68,7 @@ pipeline {
         stage ('Code Coverage') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
-                sh 'npm run coverrage'
+                sh 'npm run coverage'
                }
             }
         }
