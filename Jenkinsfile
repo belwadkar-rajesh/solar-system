@@ -32,7 +32,7 @@ pipeline {
                 stage ('OWASP Dependencies check') {
                     steps {
                         dependencyCheck additionalArguments: '''
-                            --scan \
+                            --scan \'./\'
                             --nvdApiKey=cc537789-ead1-40c4-a8ae-4610acaa9f42 \
                             --format \'ALL\' 
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
