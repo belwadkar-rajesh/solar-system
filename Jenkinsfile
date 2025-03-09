@@ -4,14 +4,18 @@ pipeline {
         nodejs 'nodejs-22-6-0'
     }
 
-    stages {
-        stage('VM Node Version') {
-            steps {
-                sh '''
-                    node -v
-                    npm -v
-                '''
+        stages {
+            stage ('VM Node Version') {
+                steps {
+                    sh '''
+                        node -v
+                        npm -v
+                        hostname
+                        systemctl status jenkins
+                    '''
+                }
+
             }
+
         }
-    }
 }
