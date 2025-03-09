@@ -34,8 +34,6 @@ pipeline {
                         dependencyCheck additionalArguments: '''
                             --updateonly \
                             --nvdApiKey=cc537789-ead1-40c4-a8ae-4610acaa9f42 \
-                            --scan \'./\'
-                            --out \'./\'
                             --format \'ALL\' 
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
                         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.html', stopBuild: false
