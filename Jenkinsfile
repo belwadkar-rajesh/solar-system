@@ -5,6 +5,9 @@ pipeline {
     }
     environment {
         MONGO_URI = "mongodb://newadmin:newadmin123@172.31.44.0:27017/admin"
+        MONGO_DB_CREDS = credentials ('mongo-db-credentials')
+        MONGO_USERNAME = credentials ('mongo-db-username')
+        MONGO_PASSWORD = credentials ('mongo-db-password')
     }
 
     options {
@@ -48,9 +51,7 @@ pipeline {
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
                         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: false
 
-                        junit allowEmptyResults: true, testResults: 'dependency-check-junit.xml'
-
-                        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+       
                     }
                 }
             }    
@@ -58,11 +59,15 @@ pipeline {
         stage ('Unit Testing') {
             options { retry(1) }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+                //withCredentials([usernamePassword(credentialsId: 'mongo-db-creds', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) { 
+                {
+                sh 'echo Colon-Separated - $MONGO_DB_CREDS'
+                sh 'echo Username - $MONGO_DB_CREDS_USR'
+                sh 'echo Password - $MONGO_DB_CREDS_PSW'
                 sh 'npm test'
                }
 
-               junit allowEmptyResults: true, testResults: 'test-results.xml'
+
             }
         }
         stage ('Code Coverage') {
@@ -71,11 +76,18 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', message: 'It will be fixed in future releases', stageResult: 'UNSTABLE') {
                     sh 'npm run coverage'
                }
-                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code Coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-
                 }
             }
         }    
+    }
+    post {
+    always {
+        // One or more steps need to be included within each condition's block.
+        junit allowEmptyResults: true, testResults: 'test-results.xml'
+        junit allowEmptyResults: true, testResults: 'dependency-check-junit.xml'
+        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code Coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+    }
     }
 
 }
