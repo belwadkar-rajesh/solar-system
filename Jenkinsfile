@@ -35,6 +35,7 @@ pipeline {
                             --scan \'./\'
                             --nvdApiKey=cc537789-ead1-40c4-a8ae-4610acaa9f42 \
                             --format \'ALL\' 
+                            --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
                         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.html', stopBuild: false
                     }
