@@ -11,7 +11,6 @@ pipeline {
                     node -v
                     npm -v
                     hostname
-                    systemctl status mongod
                 '''
             }
         }
